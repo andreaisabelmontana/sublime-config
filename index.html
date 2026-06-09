@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Synced Editor Config — Built From Scratch</title>
+<meta name="description" content="An original from-scratch build of a synced editor configuration: settings, key bindings and package lists for a text editor, version-controlled so every machine feels identical." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --accent:#ca8a04; --accent-soft:#fdf6e3; --ink:#16201f; --muted:#5d6b69;
+    --line:#dfe5e3; --bg:#fbfcfb; --card:#ffffff;
+    --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 28px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);padding:.1em .4em;border-radius:4px;color:#a16207}
+  h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.15;letter-spacing:-.01em}
+  /* Header */
+  header.hero{padding:88px 0 56px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 22px}
+  h1{font-size:clamp(2.6rem,6vw,4.1rem);margin:0 0 18px}
+  .lede{font-size:1.22rem;color:var(--muted);max-width:62ch;margin:0 0 28px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;font-size:.82rem}
+  .chip{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--muted);background:var(--card)}
+  /* Sections */
+  section{padding:54px 0;border-bottom:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+  h2{font-size:clamp(1.7rem,3.4vw,2.3rem);margin:0 0 20px}
+  h3{font-size:1.2rem;margin:0 0 6px}
+  p{margin:0 0 18px;max-width:68ch}
+  .muted{color:var(--muted)}
+  /* Stack grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:8px}
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .tool .t{font-family:var(--mono);font-size:.78rem;color:var(--accent);letter-spacing:.04em;margin-bottom:8px}
+  .tool h3{font-size:1.05rem;font-family:var(--sans);font-weight:600;margin-bottom:6px}
+  .tool p{font-size:.92rem;color:var(--muted);margin:0}
+  /* Pipeline / modules */
+  ol.flow{counter-reset:s;list-style:none;padding:0;margin:24px 0 0}
+  ol.flow li{position:relative;padding:18px 0 18px 56px;border-top:1px solid var(--line)}
+  ol.flow li:before{counter-increment:s;content:counter(s,decimal-leading-zero);position:absolute;left:0;top:18px;font-family:var(--mono);font-size:.8rem;color:var(--accent);border:1px solid var(--line);border-radius:8px;width:38px;height:38px;display:grid;place-items:center;background:var(--card)}
+  ol.flow li h3{font-family:var(--sans);font-size:1.02rem;font-weight:600;margin:0 0 4px}
+  ol.flow li p{margin:0;font-size:.93rem;color:var(--muted)}
+  .tag{display:inline-block;font-family:var(--mono);font-size:.68rem;padding:2px 7px;border-radius:5px;margin-left:8px;vertical-align:middle}
+  .tag.on{background:#e6f7ec;color:#1c7a43}
+  .tag.off{background:#fdecea;color:#b23b2c}
+  /* Callout */
+  .callout{background:var(--accent-soft);border:1px solid #f0e2bb;border-radius:14px;padding:24px 26px;margin-top:8px}
+  .callout p:last-child{margin:0}
+  /* Reflection list */
+  ul.learn{list-style:none;padding:0;margin:8px 0 0}
+  ul.learn li{padding:14px 0 14px 30px;border-top:1px solid var(--line);position:relative;color:var(--muted);max-width:68ch}
+  ul.learn li:before{content:"→";position:absolute;left:0;color:var(--accent);font-family:var(--mono)}
+  ul.learn li b{color:var(--ink);font-weight:600}
+  /* Footer */
+  footer{padding:48px 0 80px}
+  .credit{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px}
+  .credit .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  footer .fine{font-size:.8rem;color:var(--muted);margin-top:22px;text-align:center}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">From-Scratch Build · Dev Environment</p>
+    <h1>Synced Editor Config</h1>
+    <p class="lede">My text editor's settings, key bindings and installed packages — pulled out of one laptop, put under version control, and shared so every machine I touch opens the editor with the exact same muscle memory.</p>
+    <div class="meta">
+      <span class="chip">Editor settings</span><span class="chip">Key bindings</span><span class="chip">Packages</span>
+      <span class="chip">Symlink</span><span class="chip">Version control</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">What it is</p>
+    <h2>One editor, every machine</h2>
+    <p>A modern text editor keeps its personality in a folder of small files: a preferences file with your tab width and theme, a keymap that remaps shortcuts to your fingers, a list of installed packages, and per-language tweaks. Set up by hand, that folder is unique to one computer — and re-creating it on a second machine means hours of remembering exactly which boxes you ticked.</p>
+    <p>I built this to make the editor's "personality folder" portable. The whole user-configuration directory becomes a version-controlled repository; on any new machine you clone it once and point the editor at it. From then on a setting changed on one computer is a setting changed everywhere.</p>
+    <div class="callout">
+      <p><b>The core idea I wanted to learn:</b> an editor is only as good as its configuration, and configuration is just files. If those files live in a repo and the editor reads them through a symlink, "sync my editor" stops being a feature you pay for and becomes something you own.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">The stack</p>
+    <h2>What's in the config folder</h2>
+    <p class="muted">Each file in the editor's user folder controls one slice of behaviour. Here's what I tracked and why it matters.</p>
+    <div class="grid">
+      <div class="tool"><div class="t">preferences</div><h3>Global settings</h3><p>The base preferences — font, theme, indentation, rulers, behaviour on save. The single file that shapes how the editor looks and feels everywhere.</p></div>
+      <div class="tool"><div class="t">shortcuts</div><h3>Key bindings</h3><p>A custom keymap that remaps commands to the shortcuts my hands already know, so the editor never fights my reflexes on a new machine.</p></div>
+      <div class="tool"><div class="t">packages</div><h3>Package list</h3><p>The list of installed plugins. Tracking it means a fresh install can restore the same extensions automatically, not one by one.</p></div>
+      <div class="tool"><div class="t">per-language</div><h3>Syntax settings</h3><p>Language-specific overrides — different rules for Python than for markup — so each file type behaves the way that language wants.</p></div>
+      <div class="tool"><div class="t">theme</div><h3>Colour theme</h3><p>A bundled colour scheme kept in the repo, so the editor looks identical everywhere instead of falling back to defaults.</p></div>
+      <div class="tool"><div class="t">manager</div><h3>Package manager</h3><p>The editor's plugin manager reads the tracked package list and reinstalls everything — the bridge between a config file and a working install.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">How it works</p>
+    <h2>Clone once, sync forever</h2>
+    <p>The trick is not to copy the config onto each machine but to <i>replace</i> the editor's user folder with a link to the repository. After that, the editor and the repo are the same thing.</p>
+    <ol class="flow">
+      <li><h3>Install the manager <span class="tag on">core</span></h3><p>Add the editor's package manager first, so it's ready to restore plugins once the tracked list is in place.</p></li>
+      <li><h3>Clone the config <span class="tag on">core</span></h3><p>Pull the version-controlled user folder down to the new machine into a known location.</p></li>
+      <li><h3>Move the old folder aside <span class="tag on">core</span></h3><p>Rename the editor's existing user folder rather than deleting it — a safe escape hatch if anything goes wrong.</p></li>
+      <li><h3>Symlink it in <span class="tag on">core</span></h3><p>Point the editor's user folder at the cloned repo. Now editing settings in the app <i>is</i> editing the repo.</p></li>
+      <li><h3>Let packages restore <span class="tag on">core</span></h3><p>On launch the manager reads the tracked package list and reinstalls every missing plugin automatically.</p></li>
+      <li><h3>Cross-platform paths <span class="tag off">future</span></h3><p>Fuller handling of editor paths beyond one operating system is left as future work — ambitious builds are never quite finished.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">How it runs</p>
+    <h2>The setup, end to end</h2>
+    <p>Syncing is the whole point. The promise of the build is that a second machine reaches an identical editor without a single setting touched by hand:</p>
+    <ul class="learn">
+      <li><b>Clone:</b> bring the version-controlled config folder down to the new machine.</li>
+      <li><b>Link:</b> symlink it over the editor's user folder so the two are one and the same.</li>
+      <li><b>Restore:</b> open the editor and let the package manager rebuild the plugin set from the tracked list.</li>
+    </ul>
+    <p class="muted" style="margin-top:18px">In my rebuild I focused on the clone-and-link path: replace the user folder with a link, reopen the editor, and watch settings, key bindings and packages all snap into place.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Reflection</p>
+    <h2>What rebuilding it taught me</h2>
+    <ul class="learn">
+      <li><b>Sync is just a symlink.</b> The "magic" of an editor that follows you between machines turns out to be one link from the app to a git repo.</li>
+      <li><b>The package list is the real prize.</b> Settings are easy to recreate; remembering every plugin you've accumulated over years is not — so tracking that list is what makes a restore painless.</li>
+      <li><b>Move, don't delete.</b> Renaming the old user folder instead of removing it made experimenting safe — a tiny habit that saved me from losing work.</li>
+      <li><b>Config belongs in version control.</b> Once my editor lives in a repo, every change is reviewable and reversible, just like the code I write in it.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="credit">
+      <div class="k">About this build</div>
+      <p style="margin:0">An original, from-scratch build by <b>Andrea</b> — written to learn how developers keep a single, consistent editor setup across many machines by version-controlling its configuration. Plain HTML/CSS, deployed on GitHub Pages.</p>
+    </div>
+    <p class="fine">Built from scratch by Andrea · one of an ongoing series of learning builds.</p>
+  </div>
+</footer>
+</body>
+</html>
